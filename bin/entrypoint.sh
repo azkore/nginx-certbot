@@ -5,7 +5,13 @@ set -e
 # get certs only if explicitly asked for
 if [ -z "$LETSENCRYPT" ] || [ "$LETSENCRYPT" -eq "0" ]
 then
-  echo '$LETSENCRYPT not defined, skipping certs generation' && exec "$@"
+  echo '$LETSENCRYPT not defined, skipping certs generation'
+  if [ $# -ne 0 ]
+  then
+    exec "$@"
+  else
+    exec nginx -g 'daemon off;'
+  fi
 fi
 
 # validate env varz.
