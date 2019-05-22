@@ -2,6 +2,12 @@
 
 set -e
 
+# get certs only if explicitly asked for
+if [ -z "$LETSENCRYPT" ] || [ "$LETSENCRYPT" -eq "0" ]
+then
+  echo '$LETSENCRYPT not defined, skipping certs generation' && exec "$@"
+fi
+
 # validate env varz.
 [[ -z "$DOMAINS" ]] && MISSING="$MISSING DOMAINS"
 [[ -z "$EMAIL" ]] && MISSING="$MISSING EMAIL"
