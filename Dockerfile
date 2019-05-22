@@ -1,5 +1,8 @@
 FROM nginx:stable-alpine
 
+COPY --from=powerman/dockerize:v0.11.0 \
+  /usr/local/bin/dockerize /usr/local/bin/dockerize
+
 RUN apk add --update \
     curl \
     bash \
